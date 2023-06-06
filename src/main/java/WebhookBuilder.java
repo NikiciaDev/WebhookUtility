@@ -13,7 +13,7 @@ public final class WebhookBuilder {
     private String username;
     private String avatarUrl;
     private boolean tts;
-    private Webhook webhook;
+    private final List<EmbedObject> embeds = new ArrayList<>();
 
     private WebhookBuilder(String url) {
         this.url = url;
@@ -43,6 +43,11 @@ public final class WebhookBuilder {
         return this;
     }
 
+    public WebhookBuilder addEmbed(EmbedObject embed) {
+        this.embeds.add(embed);
+        return this;
+    }
+
     public Webhook build() {
         return new Webhook(this);
     }
@@ -58,7 +63,7 @@ public final class WebhookBuilder {
         private final String username;
         private final String avatarUrl;
         private final boolean tts;
-        private final List<EmbedObject> embeds = new ArrayList<>();
+        private final List<EmbedObject> embeds;
 
         private Webhook(WebhookBuilder builder) {
             this.url = builder.url;
@@ -66,6 +71,7 @@ public final class WebhookBuilder {
             this.username = builder.username;
             this.avatarUrl = builder.avatarUrl;
             this.tts = builder.tts;
+            this.embeds = builder.embeds;
         }
 
         public void addEmbed(EmbedObject embed) {
